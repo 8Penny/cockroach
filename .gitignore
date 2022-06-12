@@ -29,6 +29,8 @@ ExportedObj/
 *.pidb
 *.booprox
 *.svd
+*.sln
+*.csproj
 *.DotSettings
 .idea
 .vs/
