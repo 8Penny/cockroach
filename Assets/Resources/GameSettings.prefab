@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameSettings: {fileID: 11400000, guid: 506930cdf149b4936a7759692e15d134, type: 2}
+  _cockroachSettings: {fileID: 11400000, guid: a7d1ac6eb09e74d39a085d419722b054, type: 2}
+  _cockroachPrefab: {fileID: 4523816025633726305, guid: d467bb9d50a5e4d8e97c39661d7bcda7, type: 3}

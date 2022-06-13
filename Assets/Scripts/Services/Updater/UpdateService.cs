@@ -73,7 +73,7 @@ namespace Services.Updater
             _areUpdatablesLocked = true;
             foreach (var updatable in _fixedUpdatables)
             {
-                updatable.FixedUpdate();
+                updatable.FixedUpdate(Time.deltaTime);
             }
 
             AfterUpdate();

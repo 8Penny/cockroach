@@ -1,4 +1,3 @@
-using System;
 using Services.Stats;
 using Services.Updater;
 using UnityEngine;

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Views
@@ -11,5 +12,17 @@ namespace Views
 
         public Rigidbody2D RigidBody => _rigidbody;
         public Sprite Sprite => _sprite;
+
+        public event Action OnEnterDangerZone;
+        public event Action OnExitDangerZone;
+
+        public void EnterDangerZone()
+        {
+            OnEnterDangerZone?.Invoke();
+        }
+        public void ExitDangerZone()
+        {
+            OnExitDangerZone?.Invoke();
+        }
     }
 }

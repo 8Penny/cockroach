@@ -40,7 +40,7 @@ public class BorderChecker : MonoBehaviour, IFieldTrigger, IUpdatable
 
     public void Update()
     {
-        bool inside = _collider.bounds.Contains(_stats.TargetPosition);
+        bool inside = _collider.bounds.Contains(_stats.PlayerTargetPosition);
         if (inside == _inField)
         {
             return;

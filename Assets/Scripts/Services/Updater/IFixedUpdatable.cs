@@ -2,6 +2,6 @@ namespace Services.Updater
 {
     public interface IFixedUpdatable : IBaseUpdatable
     {
-        void FixedUpdate();
+        void FixedUpdate(float deltaTime);
     }
 }

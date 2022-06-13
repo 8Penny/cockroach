@@ -25,8 +25,11 @@ namespace GameLogics.UILogics
         private void Awake()
         {
             _gameSettings = _settingsContainer.GameSettings;
-            SetupSlider(_radiusSlider, _gameSettings.PlayerRadius, 1);
+            SetupSlider(_radiusSlider, _gameSettings.PlayerRadius, _gameSettings.PlayerRadius.MinValue);
             SetupSlider(_speedSlider, _gameSettings.CockroachSpeedModifier, 1);
+            
+            _statsUpdater.UpdatePlayerRadius(_radiusSlider.value);
+            _statsUpdater.UpdateSpeedModifier(_speedSlider.value);
         }
 
         private void SetupSlider(Slider slider, MinMaxValue info, float currentValue)

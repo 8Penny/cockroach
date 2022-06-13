@@ -21,12 +21,12 @@ public class GameInstaller : MonoInstaller
         Container.Bind<UpdateService>().FromNewComponentOnNewGameObject().AsSingle();
         Container.Bind<GameStateService>().AsSingle();
         Container.Bind<GameLoopManager>().AsSingle().NonLazy();
-        Container.Bind<UIService>().AsSingle();
+        Container.Bind<UIService>().AsSingle().NonLazy();
         
         Container.Bind<PlayerController>().AsSingle();
         Container.Bind<PlayerView>().FromComponentInNewPrefab(_playerPrefab).AsSingle().NonLazy();
         
         Container.BindInterfacesTo<StatsService>().AsSingle();
-        Container.BindInterfacesTo<CockroachManager>().AsSingle();
+        Container.Bind<ICockroachManager>().To<CockroachManager>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
     }
 }

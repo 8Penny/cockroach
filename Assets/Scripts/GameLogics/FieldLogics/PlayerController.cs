@@ -1,6 +1,7 @@
 using Services.Game;
 using Services.Stats;
 using Services.Updater;
+using UnityEngine;
 using Views;
 using Zenject;
 
@@ -18,13 +19,13 @@ namespace GameLogics.FieldLogics
         private PlayerView _view;
 
         private bool _isActive => _stats.IsPlayerActive && _gameStateService.CurrentGameState == GameState.Started;
-
+        
         public void Update()
         {
             _view.gameObject.SetActive(_isActive);
         }
 
-        public void FixedUpdate()
+        public void FixedUpdate(float deltaTime)
         {
             if (!_wasInited)
             {
@@ -33,7 +34,7 @@ namespace GameLogics.FieldLogics
 
             if (_isActive)
             {
-                _view.RigidBody.MovePosition(_stats.TargetPosition);
+                _view.RigidBody.MovePosition(_stats.PlayerTargetPosition);
             }
         }
 
@@ -44,14 +45,25 @@ namespace GameLogics.FieldLogics
             {
                 return;
             }
-            _wasInited = true;
             _view.gameObject.SetActive(true);
+            _stats.ModifiersUpdated += ModifiersUpdatedHandler;
+            ModifiersUpdatedHandler();
+            _wasInited = true;
         }
 
         public void Reset()
         {
             _view.gameObject.SetActive(false);
+            _stats.ModifiersUpdated -= ModifiersUpdatedHandler;
             _wasInited = false;
+        }
+
+        private void ModifiersUpdatedHandler()
+        {
+            if (_view != null)
+            {
+                _view.ImpactCircle.transform.localScale = new Vector3(_stats.PlayerRadius, _stats.PlayerRadius, 0);
+            }
         }
     }
 }
