@@ -28,6 +28,7 @@ namespace Services.Updater
                 _lateUpdatables.Add(updatable as ILateUpdatable);
             if (updatable is IFixedUpdatable)
                 _fixedUpdatables.Add(updatable as IFixedUpdatable);
+
         }
         
         public void Unregister(IBaseUpdatable updatable)
@@ -96,6 +97,8 @@ namespace Services.Updater
             {
                 action(updatable);
             }
+            
+            queue.Clear();
         }
     }
 }

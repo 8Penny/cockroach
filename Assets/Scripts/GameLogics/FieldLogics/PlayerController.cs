@@ -6,16 +6,23 @@ using Zenject;
 
 namespace GameLogics.FieldLogics
 {
-    public class PlayerController : IFixedUpdatable
+    public class PlayerController : IFixedUpdatable, IUpdatable
     {
         [Inject]
         public IStats _stats;
         
         [Inject]
         public GameStateService _gameStateService;
-        
+
         private bool _wasInited;
         private PlayerView _view;
+
+        private bool _isActive => _stats.IsPlayerActive && _gameStateService.CurrentGameState == GameState.Started;
+
+        public void Update()
+        {
+            _view.gameObject.SetActive(_isActive);
+        }
 
         public void FixedUpdate()
         {
@@ -24,7 +31,7 @@ namespace GameLogics.FieldLogics
                 return;
             }
 
-            if (_stats.IsPlayerActive && _gameStateService.CurrentGameState == GameState.Started)
+            if (_isActive)
             {
                 _view.RigidBody.MovePosition(_stats.TargetPosition);
             }
@@ -32,11 +39,11 @@ namespace GameLogics.FieldLogics
 
         public void Setup(PlayerView view)
         {
+            _view = view;
             if (_view == null)
             {
                 return;
             }
-            _view = view;
             _wasInited = true;
             _view.gameObject.SetActive(true);
         }

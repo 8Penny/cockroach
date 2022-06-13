@@ -15,6 +15,12 @@ public class MouseObserver : MonoBehaviour, IUpdatable, IFixedUpdatable
     public UpdateService _updateService;
     
     private Vector3 _mousePosition;
+    private Camera _camera;
+
+    private void Awake()
+    {
+        _camera = Camera.main;
+    }
 
     public void OnEnable()
     {
@@ -29,8 +35,9 @@ public class MouseObserver : MonoBehaviour, IUpdatable, IFixedUpdatable
     public void Update()
     {
         Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 0;
-        _mousePosition = Camera.main.ScreenToWorldPoint(mousePos);
+
+        _mousePosition = _camera.ScreenToWorldPoint(mousePos);
+        _mousePosition.z = 0;
     }
     
     public void FixedUpdate()

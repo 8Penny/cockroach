@@ -9,7 +9,7 @@ namespace Services.UI
         private UIPanelType _type;
 
         [Inject]
-        private UIService _uiService;
+        public UIService _uiService;
 
         public UIPanelType Type => _type;
 

@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
 using GameLogics.FieldLogics;
+using Services.Updater;
 using Views;
+using Zenject;
 
 namespace Services.Game
 {
     public class GameLoopManager : IDisposable
     {
         private GameStateService _gameStateService;
+        private UpdateService _updateService;
         private PlayerController _player;
         private PlayerView _playerView;
 
@@ -15,11 +18,12 @@ namespace Services.Game
         private bool _wasPaused;
 
         //todo: create player factory
-        public GameLoopManager(GameStateService gameStateService, PlayerController player, PlayerView view)
+        public GameLoopManager(GameStateService gameStateService, UpdateService updateService, PlayerController player, PlayerView view)
         {
+            _updateService = updateService;
             _gameStateService = gameStateService;
             _gameStateService.OnGameStateChanged += OnStateChanged;
-
+            
             _player = player;
             _playerView = view;
             
@@ -31,6 +35,7 @@ namespace Services.Game
         public void Dispose()
         {
             _gameStateService.OnGameStateChanged -= OnStateChanged;
+            Reset();
         }
 
         private void OnStateChanged()
@@ -63,11 +68,13 @@ namespace Services.Game
         private void Reset()
         {
             _player.Reset();
+            _updateService.Unregister(_player);
         }
         
         private void Setup()
         {
             _player.Setup(_playerView);
+            _updateService.Register(_player);
         }
     }
 }

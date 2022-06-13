@@ -64,7 +64,7 @@ namespace Services.UI
 
         public void OnStartButtonClicked()
         {
-            
+            _gameStateService.SetGameState(GameState.Started);
         }
     }
 }
