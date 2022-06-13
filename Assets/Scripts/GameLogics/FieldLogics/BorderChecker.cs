@@ -26,7 +26,6 @@ public class BorderChecker : MonoBehaviour, IFieldTrigger, IUpdatable
     public void Awake()
     {
         _fieldObserver.Register(this);
-        
     }
 
     public void OnEnable()
@@ -56,16 +55,6 @@ public class BorderChecker : MonoBehaviour, IFieldTrigger, IUpdatable
         {
             OnPlayerExit?.Invoke();
         }
-    }
-
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        //OnPlayerEnter?.Invoke();
-    }
-
-    public void OnTriggerExit2D(Collider2D other)
-    {
-        //OnPlayerExit?.Invoke();
     }
 
     public void OnDestroy()

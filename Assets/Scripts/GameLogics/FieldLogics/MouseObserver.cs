@@ -4,11 +4,8 @@ using Services.Updater;
 using UnityEngine;
 using Zenject;
 
-public class MouseObserver : MonoBehaviour, IUpdatable, IFixedUpdatable
+public class MouseObserver : MonoBehaviour, IUpdatable
 {
-    [SerializeField]
-    private Rigidbody2D _rigidbody;
-
     [Inject]
     public IStatsUpdater _statsService;
     [Inject]
@@ -38,14 +35,8 @@ public class MouseObserver : MonoBehaviour, IUpdatable, IFixedUpdatable
 
         _mousePosition = _camera.ScreenToWorldPoint(mousePos);
         _mousePosition.z = 0;
-    }
-    
-    public void FixedUpdate()
-    {
-        if (_rigidbody != null)
-        {
-            _rigidbody.MovePosition(_mousePosition);
-            _statsService.UpdateTargetPosition(_mousePosition);
-        }
+        
+        
+        _statsService.UpdateTargetPosition(_mousePosition);
     }
 }

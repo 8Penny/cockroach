@@ -20,6 +20,16 @@ namespace Services.Stats
             _targetPosition = position;
         }
 
+        public void UpdatePlayerRadius(float value)
+        {
+            _playerRadiusRatio = value;
+        }
+
+        public void UpdateSpeedModifier(float value)
+        {
+            _cockroachSpeedModifier = value;
+        }
+
         public void Register(IFieldTrigger trigger)
         {
             trigger.OnPlayerEnter += PlayerEnterHandler;
