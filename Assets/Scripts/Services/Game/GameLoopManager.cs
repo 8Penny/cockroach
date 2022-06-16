@@ -86,7 +86,7 @@ namespace Services.Game
         {
             _player.Setup(_playerView);
             _updateService.Register(_player);
-            _cockroachManager.Setup(_fieldContainer.StartPoint.transform, _fieldContainer.FinishPoint.transform);
+            _cockroachManager.Setup(_fieldContainer);
         }
     }
 }

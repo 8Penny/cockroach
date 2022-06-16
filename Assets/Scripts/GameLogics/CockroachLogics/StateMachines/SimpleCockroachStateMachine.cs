@@ -1,3 +1,4 @@
+using GameLogics.FieldLogics;
 using Services.Stats;
 using Settings;
 using UnityEngine;
@@ -10,15 +11,17 @@ namespace GameLogics.CockroachLogics
         private CockroachSettings _settings;
         private Transform _target;
         private Rigidbody2D _rigidbody;
+        private FieldContainer _fieldContainer;
 
         private float _currentSpeed;
         
-        public SimpleCockroachStateMachine(IStats stats, CockroachSettings settings, Transform target, Rigidbody2D rigidbody) : base()
+        public SimpleCockroachStateMachine(FieldContainer fieldContainer, IStats stats, CockroachSettings settings, Transform target, Rigidbody2D rigidbody) : base()
         {
             _stats = stats;
             _settings = settings;
             _target = target;
             _rigidbody = rigidbody;
+            _fieldContainer = fieldContainer;
         }
 
         protected override void MoveToTarget(float deltaTime)
@@ -38,7 +41,14 @@ namespace GameLogics.CockroachLogics
             
             var position = _rigidbody.position;
             var toVector = (position - GetTarget2dPosition(_stats.PlayerTargetPosition)).normalized;
-            MoveToPosition(position + toVector * _currentSpeed * _stats.CockroachSpeedModifier * deltaTime);
+
+            var newPosition = position + toVector * _currentSpeed * _stats.CockroachSpeedModifier * deltaTime;
+            if (!_fieldContainer.Field.bounds.Contains(newPosition))
+            {
+                newPosition = position + Vector2.down * _currentSpeed * _stats.CockroachSpeedModifier * deltaTime;
+            }
+            
+            MoveToPosition(newPosition);
 
             _currentSpeed += _settings.RunAwayAcceleration;
         }

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 2
   RunAwayAcceleration: 0.01
-  RunAwayTime: 0.2
+  RunAwayTime: 2
   AccelerationTime: 2

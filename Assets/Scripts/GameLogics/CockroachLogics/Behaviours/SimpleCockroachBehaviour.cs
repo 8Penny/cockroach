@@ -6,6 +6,7 @@ namespace GameLogics.CockroachLogics
 {
     public class SimpleCockroachBehaviour : BaseCockroachBehaviour
     {
+        private const float INACTIVE_VALUE = -1f;
         private float _returnToTargetMoveStateTime;
         private CockroachSettings _settings;
         public SimpleCockroachBehaviour(CockroachView view, CockroachSettings settings, Transform target, BaseCockroachStateMachine sm) : base(view, target, sm)
@@ -24,6 +25,12 @@ namespace GameLogics.CockroachLogics
             Reset();
         }
 
+        protected override void EnterDangerRadiusHandler()
+        {
+            base.EnterDangerRadiusHandler();
+            _returnToTargetMoveStateTime = INACTIVE_VALUE;
+        }
+
         protected override void ExitDangerRadiusHandler()
         {
             _returnToTargetMoveStateTime = Time.time + _settings.RunAwayTime;
@@ -33,11 +40,7 @@ namespace GameLogics.CockroachLogics
         {
             if (_stateMachine.CurrentState == CockroachState.FromPlayer)
             {
-                if (_returnToTargetMoveStateTime >= 0)
-                {
-                    _returnToTargetMoveStateTime -= deltaTime;
-                }
-                else
+                if (_returnToTargetMoveStateTime > 0 && _returnToTargetMoveStateTime < Time.time )
                 {
                     _stateMachine.SetState(CockroachState.ToTarget);
                 }
