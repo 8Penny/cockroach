@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f15ae9bedcc4dd39e4ef06f077d471e, type: 3}
   m_Name: CockroachSettings
   m_EditorClassIdentifier: 
-  Speed: 0.3
+  Speed: 2
   RunAwayAcceleration: 0.01
   RunAwayTime: 2
-  AccelerationTime: 2
+  AccelerationTime: 3

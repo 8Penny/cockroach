@@ -1,4 +1,3 @@
-using GameLogics.FieldLogics;
 using Services.Stats;
 using Settings;
 using UnityEngine;
@@ -8,12 +7,12 @@ namespace GameLogics.CockroachLogics
     public class SimpleCockroachStateMachine : BaseCockroachStateMachine
     {
         private const float DIRECTION_UPDATE_TIME = 1f;
+        private const float BORDER_SHIFT = 0.1f;
 
         private IStats _stats;
         private CockroachSettings _settings;
         private Transform _target;
         private Rigidbody2D _rigidbody;
-        private FieldContainer _fieldContainer;
         private Collider2D _collider;
 
         private RaycastHit2D[] _results = new RaycastHit2D[2];
@@ -22,22 +21,36 @@ namespace GameLogics.CockroachLogics
         private Vector2 _currentDirection;
         private float _timeToUpdateDirection;
         private bool _nearBorder;
+        private float _timeToConstantSpeed;
         
-        public SimpleCockroachStateMachine(FieldContainer fieldContainer, IStats stats, CockroachSettings settings, Transform target, Rigidbody2D rigidbody) : base()
+        public SimpleCockroachStateMachine(IStats stats, CockroachSettings settings, Transform target, Rigidbody2D rigidbody) : base()
         {
             _stats = stats;
             _settings = settings;
             _target = target;
             _rigidbody = rigidbody;
             _collider = rigidbody.GetComponent<Collider2D>();
-            _fieldContainer = fieldContainer;
+        }
+
+        public override void Setup()
+        {
+            _currentSpeed = 0;
+            _timeToConstantSpeed = _settings.AccelerationTime;
         }
 
         protected override void MoveToTarget(float deltaTime)
         {
+            var targetSpeed = _settings.Speed * _stats.CockroachSpeedModifier;
+            if (_timeToConstantSpeed > 0)
+            {
+                float factor = _timeToConstantSpeed / _settings.AccelerationTime;
+                _currentSpeed = Mathf.Lerp(0, targetSpeed, 1 - factor);
+
+                _timeToConstantSpeed -= deltaTime;
+            }
             var position = _rigidbody.position;
             var toVector = (GetTarget2dPosition(_target.position) - position).normalized;
-            MoveToPosition(position + toVector * _settings.Speed * _stats.CockroachSpeedModifier  * deltaTime);
+            MoveToPosition(position + toVector * _currentSpeed * deltaTime);
         }
 
         protected override void MoveFromPlayer(float deltaTime)
@@ -78,7 +91,7 @@ namespace GameLogics.CockroachLogics
             }
 
             float angle = Vector2.SignedAngle(_results[0].normal, -_currentDirection);
-            Debug.Log(angle);
+
             if (Mathf.Abs(angle) > 70f)
             {
                 _currentDirection = Vector2.Reflect(_currentDirection, _results[0].normal);
@@ -93,7 +106,7 @@ namespace GameLogics.CockroachLogics
         {
             ContactFilter2D filter = new ContactFilter2D();
             filter.SetLayerMask(LayerMask.GetMask("Borders"));
-            var resultsCount = _collider.Raycast(_currentDirection, filter, _results, 0.4f);
+            var resultsCount = _collider.Raycast(_currentDirection, filter, _results, BORDER_SHIFT);
             return resultsCount > 0;
         }
 

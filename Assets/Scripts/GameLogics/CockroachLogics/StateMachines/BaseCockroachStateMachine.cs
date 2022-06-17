@@ -20,6 +20,11 @@ namespace GameLogics.CockroachLogics
             _states[CockroachState.FromPlayer] = MoveFromPlayer;
         }
 
+        public virtual void Setup()
+        {
+            
+        }
+
         protected virtual void Idle(float deltaTime)
         {
         }

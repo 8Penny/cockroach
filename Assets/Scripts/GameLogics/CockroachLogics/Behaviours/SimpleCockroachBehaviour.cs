@@ -9,13 +9,14 @@ namespace GameLogics.CockroachLogics
         private const float INACTIVE_VALUE = -1f;
         private float _returnToTargetMoveStateTime;
         private CockroachSettings _settings;
-        public SimpleCockroachBehaviour(CockroachView view, CockroachSettings settings, Transform target, BaseCockroachStateMachine sm) : base(view, target, sm)
+        public SimpleCockroachBehaviour(CockroachView view, CockroachSettings settings, BaseCockroachStateMachine sm) : base(view, sm)
         {
             _settings = settings;
         }
 
         public void Activate()
         {
+            _stateMachine.Setup();
             _stateMachine.SetState(CockroachState.ToTarget);
             Setup();
         }

@@ -14,14 +14,19 @@ namespace GameLogics.UILogics
         private Slider _speedSlider;
         [SerializeField]
         private Slider _radiusSlider;
-
-        [Inject]
-        public SettingsContainer _settingsContainer;
-        [Inject]
-        public IStatsUpdater _statsUpdater;
+        
+        private SettingsContainer _settingsContainer;
+        private IStatsUpdater _statsUpdater;
         
         private GameSettings _gameSettings;
-
+        
+        [Inject]
+        public void Init(SettingsContainer settings, IStatsUpdater stats)
+        {
+            _settingsContainer = settings;
+            _statsUpdater = stats;
+        }
+        
         private void Awake()
         {
             _gameSettings = _settingsContainer.GameSettings;

@@ -8,11 +8,16 @@ namespace Services.UI
         [SerializeField]
         private UIPanelType _type;
 
-        [Inject]
-        public UIService _uiService;
+        private UIService _uiService;
 
         public UIPanelType Type => _type;
-
+        
+        [Inject]
+        public void Init(UIService uiService)
+        {
+            _uiService = uiService;
+        }
+        
         private void Awake()
         {
             _uiService.Register(this);

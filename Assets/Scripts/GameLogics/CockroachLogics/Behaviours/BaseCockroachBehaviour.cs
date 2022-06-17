@@ -9,14 +9,12 @@ namespace GameLogics.CockroachLogics
     public abstract class BaseCockroachBehaviour : IFixedUpdatable
     {
         protected CockroachView _view;
-        protected CockroachState _currentState;
-        protected Transform _target;
         protected BaseCockroachStateMachine _stateMachine;
+        public CockroachView View => _view;
 
-        public BaseCockroachBehaviour(CockroachView view, Transform target, BaseCockroachStateMachine stateMachine)
+        public BaseCockroachBehaviour(CockroachView view, BaseCockroachStateMachine stateMachine)
         {
             _view = view;
-            _target = target;
 
             _stateMachine = stateMachine;
         }

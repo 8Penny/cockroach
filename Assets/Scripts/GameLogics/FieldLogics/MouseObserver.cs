@@ -5,13 +5,18 @@ using Zenject;
 
 public class MouseObserver : MonoBehaviour, IUpdatable
 {
-    [Inject]
-    public IStatsUpdater _statsService;
-    [Inject]
-    public UpdateService _updateService;
+    private IStatsUpdater _statsService;
+    private UpdateService _updateService;
     
     private Vector3 _mousePosition;
     private Camera _camera;
+
+    [Inject]
+    public void Init(IStatsUpdater stats, UpdateService updateService)
+    {
+        _statsService = stats;
+        _updateService = updateService;
+    }
 
     private void Awake()
     {

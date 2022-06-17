@@ -6,8 +6,14 @@ namespace GameLogics.FieldLogics
 {
     public class FinishPoint : MonoBehaviour
     {
+        private GameStateService _gameStateService;
+        
         [Inject]
-        public GameStateService _gameStateService;
+        public void Init(GameStateService gameStateService)
+        {
+            _gameStateService = gameStateService;
+        }
+        
         private void OnTriggerEnter2D(Collider2D col)
         {
             if (col.CompareTag(EntityTag.Cockroach))

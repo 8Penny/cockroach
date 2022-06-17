@@ -7,21 +7,24 @@ using Zenject;
 
 public class BorderChecker : MonoBehaviour, IFieldTrigger, IUpdatable
 {
-    [Inject]
-    public IFieldObserver _fieldObserver;
-    [Inject]
-    public UpdateService _updateService;
-
-    [Inject]
-    public IStats _stats;
+    private IFieldObserver _fieldObserver;
+    private UpdateService _updateService;
+    private IStats _stats;
 
     [SerializeField]
     private BoxCollider2D _collider;
-
-
+    
     private bool _inField = false;
     public event Action OnPlayerEnter;
     public event Action OnPlayerExit;
+    
+    [Inject]
+    public void Init(IFieldObserver fieldObserver,UpdateService updateService,IStats stats)
+    {
+        _fieldObserver = fieldObserver;
+        _updateService = updateService;
+        _stats = stats;
+    }
 
     public void Awake()
     {
