@@ -16,8 +16,8 @@ namespace GameLogics.CockroachLogics
 
         public void Activate()
         {
-            _stateMachine.Setup();
             _stateMachine.SetState(CockroachState.ToTarget);
+            _stateMachine.Setup();
             Setup();
         }
         public void Deactivate()

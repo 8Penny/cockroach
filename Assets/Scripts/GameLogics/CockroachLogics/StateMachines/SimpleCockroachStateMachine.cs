@@ -23,13 +23,14 @@ namespace GameLogics.CockroachLogics
         private bool _nearBorder;
         private float _timeToConstantSpeed;
         
-        public SimpleCockroachStateMachine(IStats stats, CockroachSettings settings, Transform target, Rigidbody2D rigidbody) : base()
+        public SimpleCockroachStateMachine(IStats stats, CockroachSettings settings, Transform target,
+            Rigidbody2D rigidbody, Collider2D collider) : base()
         {
             _stats = stats;
             _settings = settings;
             _target = target;
             _rigidbody = rigidbody;
-            _collider = rigidbody.GetComponent<Collider2D>();
+            _collider = collider;
         }
 
         public override void Setup()
@@ -55,13 +56,13 @@ namespace GameLogics.CockroachLogics
 
         protected override void MoveFromPlayer(float deltaTime)
         {
-            if (!_stats.IsPlayerActive)
+            var position = _rigidbody.position;
+            if (!_stats.IsPlayerActive || Vector2.Distance(_stats.PlayerTargetPosition, position) > _stats.PlayerRadius * 1.5f)
             {
                 SetState(CockroachState.ToTarget);
                 return;
             }
 
-            var position = _rigidbody.position;
             if (_timeToUpdateDirection < 0 || HasObstacle())
             {
                 UpdateDirectionValue(position);
@@ -122,10 +123,8 @@ namespace GameLogics.CockroachLogics
 
         protected override void OnStateChanged(CockroachState oldState, CockroachState newState)
         {
-            if (newState == CockroachState.FromPlayer)
-            {
-                _currentSpeed = _settings.Speed;
-            }
+            _currentSpeed = _settings.Speed;
+            
             if (newState == CockroachState.ToTarget)
             {
                 _nearBorder = false;

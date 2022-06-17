@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   PlayerRadius:
-    MaxValue: 25
-    MinValue: 4
+    MaxValue: 4
+    MinValue: 0.5
   CockroachSpeedModifier:
-    MaxValue: 3
+    MaxValue: 10
     MinValue: 0.5

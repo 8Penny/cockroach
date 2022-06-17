@@ -33,7 +33,8 @@ namespace Services.Cockroach
                 var cockroach = Instantiate(_container.CockroachPrefab);
             
                 var view = cockroach.GetComponent<CockroachView>();
-                var stateMachine = new SimpleCockroachStateMachine(_stats, _container.CockroachSettings, fieldContainer.FinishPoint.transform, view.RigidBody);
+                var stateMachine = new SimpleCockroachStateMachine(_stats, _container.CockroachSettings,
+                    fieldContainer.FinishPoint.transform, view.RigidBody, view.Collider);
                 var behaviour = new SimpleCockroachBehaviour(view, _container.CockroachSettings, stateMachine);
                 _behaviours.Add(behaviour);
             }

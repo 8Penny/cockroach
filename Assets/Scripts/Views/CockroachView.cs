@@ -8,10 +8,13 @@ namespace Views
         [SerializeField]
         private Rigidbody2D _rigidbody;
         [SerializeField]
-        private Sprite _sprite;
+        private Collider2D _collider;
+        [SerializeField]
+        private SpriteRenderer _spriteRenderer;
 
         public Rigidbody2D RigidBody => _rigidbody;
-        public Sprite Sprite => _sprite;
+        public SpriteRenderer SpriteRenderer => _spriteRenderer;
+        public Collider2D Collider => _collider;
 
         public event Action OnEnterDangerZone;
         public event Action OnExitDangerZone;

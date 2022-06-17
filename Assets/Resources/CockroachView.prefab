@@ -48,7 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 8785757477815252667}
-  _sprite: {fileID: 0}
+  _collider: {fileID: -6793368133064996631}
+  _spriteRenderer: {fileID: 1769054105958970287}
 --- !u!212 &1769054105958970287
 SpriteRenderer:
   m_ObjectHideFlags: 0
